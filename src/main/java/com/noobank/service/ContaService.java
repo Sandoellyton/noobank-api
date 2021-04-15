@@ -1,9 +1,11 @@
 package com.noobank.service;
 
-import com.noobank.entities.Conta;
+import com.noobank.model.Conta;
 import com.noobank.repository.ContaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,5 +36,13 @@ public class ContaService {
         BeanUtils.copyProperties(novaConta, conta, "id");
 
         return repository.save(conta);
+    }
+
+    public void remover(Long id) throws Exception {
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new Exception("Entidade está em uso, não pode ser removiada");
+        }
     }
 }

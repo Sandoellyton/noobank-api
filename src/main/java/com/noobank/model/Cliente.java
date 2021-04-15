@@ -1,9 +1,8 @@
-package com.noobank.entities;
+package com.noobank.model;
 
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -14,6 +13,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JoinColumn(nullable = false)
     private String nome;
 
 }

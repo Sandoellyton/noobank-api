@@ -1,6 +1,7 @@
 package com.noobank.controller;
 
-import com.noobank.entities.Conta;
+import com.noobank.model.Conta;
+import com.noobank.repository.ContaRepository;
 import com.noobank.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,11 @@ public class ContaController {
 
     @Autowired
     ContaService service;
+    ContaRepository repository;
 
     @PostMapping
-    public ResponseEntity<?> inserir(@RequestBody Conta conta){
-        service.inserir(conta);
+    public ResponseEntity<?> inserir(@RequestBody Conta NovaConta){
+        Conta conta = service.inserir(NovaConta);
         return new ResponseEntity<>(conta, HttpStatus.CREATED);
     }
 
@@ -39,5 +41,11 @@ public class ContaController {
     public ResponseEntity<?> atualizarTotal(@PathVariable Long id, @RequestBody Conta novaConta){
         Conta conta = service.atualizarTotal(id, novaConta);
         return new ResponseEntity<>(conta, HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public void removerPorId(@PathVariable Long id) throws Exception {
+        service.remover(id);
     }
 }

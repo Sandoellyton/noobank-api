@@ -1,4 +1,4 @@
-package com.noobank.entities;
+package com.noobank.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

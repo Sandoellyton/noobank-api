@@ -1,12 +1,12 @@
 package com.noobank.service;
 
-import com.noobank.entities.Cliente;
+import com.noobank.model.Cliente;
 import com.noobank.repository.ClienteRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,8 +29,15 @@ public class ClienteService {
         return repository.findById(id);
     }
 
-    public void remover(Long id){
-        repository.deleteById(id);
+    public void remover(Long id) throws Exception {
+        try {
+            repository.deleteById(id);
+
+        } catch (EmptyResultDataAccessException e) {
+            throw new Exception("Entidade não encontrada");
+        } catch (DataIntegrityViolationException e) {
+            throw new Exception("Entidade está em uso, não pode ser removiada");
+        }
     }
 
     public Cliente atualizacaoTotal(Long id, Cliente novoCliente){

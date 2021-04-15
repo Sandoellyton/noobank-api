@@ -1,6 +1,6 @@
 package com.noobank.service;
 
-import com.noobank.entities.Extrato;
+import com.noobank.model.Extrato;
 import com.noobank.repository.ExtratoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
